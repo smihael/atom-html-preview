@@ -1,16 +1,15 @@
 # Atom WebPPL Support
 
-WebPPL & WebPPL-viz support with a live preview tool for Atom Editor. 
+[WebPPL](http://webppl.org/) & [WebPPL-viz](http://probmods.github.io/webppl-viz/) support with a live preview tool for Atom Editor. 
 
 Install:
 ```bash
-git clone https://github.com/smihael/atom-webppl-preview
-cd atom-webppl-preview
-apm link
+apm install atom-webppl-preview
 ```
-Alternativelly (if you have atom shell extensions installed), you can just use `apm install https://github.com/smihael/atom-webppl-preview.git`.
 
-To tggle Live Preview, you can either press `ctrl-alt-w` in the editor to open the preview pane or find it in the Plugins menu.
+Alternativelly (if you want to fetch the newest version), you can just use `apm install https://github.com/smihael/atom-webppl-preview.git`.
+
+To toggle Live Preview, you can either press `ctrl-alt-w` in the editor to open the preview pane or find it in the Plugins menu.
 
 An example with dummy WebPPL code
 
@@ -24,6 +23,7 @@ For syntax highlighting I recommend installing `file-types` package and adding t
 ```
 
 
-## Ackwnowlegments
+## Acknowledgments
+This package is based on:
 - https://github.com/harmsk/atom-html-preview
 - https://github.com/atom/markdown-preview
