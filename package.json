@@ -1,6 +1,6 @@
 {
   "name": "atom-webppl-preview",
-  "main": "./lib/atom-html-preview",
+  "main": "./lib/atom-webppl-preview",
   "version": "0.0.1",
   "description": "WebPPL support with a live preview tool for Atom Editor.",
   "repository": {

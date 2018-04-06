@@ -28,7 +28,7 @@ class AtomHtmlPreviewView extends ScrollView
     new AtomHtmlPreviewView(state)
 
   @content: ->
-    @div class: 'atom-html-preview native-key-bindings', tabindex: -1, =>
+    @div class: 'atom-webppl-preview native-key-bindings', tabindex: -1, =>
       style = 'z-index: 2; padding: 2em;'
       #@div class: 'test', "Test"
       @div class: 'show-error', style: style
@@ -118,13 +118,13 @@ class AtomHtmlPreviewView extends ScrollView
       contextMenuClientX = event.clientX
 
     atom.commands.add @element,
-      'atom-html-preview:open-devtools': =>
+      'atom-webppl-preview:open-devtools': =>
         @webview.openDevTools()
-      'atom-html-preview:inspect': =>
+      'atom-webppl-preview:inspect': =>
         @webview.inspectElement(contextMenuClientX, contextMenuClientY)
-      'atom-html-preview:print': =>
+      'atom-webppl-preview:print': =>
         @webview.print()
-      'atom-html-preview:refresh': =>
+      'atom-webppl-preview:refresh': =>
         @webview.reload()
 
 
@@ -137,7 +137,7 @@ class AtomHtmlPreviewView extends ScrollView
     @editorSub = new CompositeDisposable
 
     if @editor?
-      if atom.config.get("atom-html-preview.triggerOnSave")
+      if atom.config.get("atom-webppl-preview.triggerOnSave")
         @editorSub.add @editor.onDidSave changeHandler
       else
         @editorSub.add @editor.onDidStopChanging changeHandler
@@ -145,7 +145,7 @@ class AtomHtmlPreviewView extends ScrollView
 
   renderHTML: ->
     if @editor?
-      if not atom.config.get("atom-html-preview.triggerOnSave") && @editor.getPath()?
+      if not atom.config.get("atom-webppl-preview.triggerOnSave") && @editor.getPath()?
         @save(@renderHTMLCode)
       else
         @renderHTMLCode()
@@ -156,7 +156,7 @@ class AtomHtmlPreviewView extends ScrollView
     out = ""
     fileEnding = @editor.getTitle().split(".").pop()
 
-    #if atom.config.get("atom-html-preview.enableWpViz")
+    #if atom.config.get("atom-webppl-preview.enableWpViz")
     out += """
         <script src="http://cdn.webppl.org/webppl-viz-0.7.11.js"></script>
         <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
@@ -190,7 +190,7 @@ class AtomHtmlPreviewView extends ScrollView
       #@webview.loadURL('data:text/html,<textarea>'+@tmpPath+'</textarea>')
       @webview.loadURL("data:text/html,"+@outExport)
 
-      atom.commands.dispatch 'atom-html-preview', 'html-changed'
+      atom.commands.dispatch 'atom-webppl-preview', 'html-changed'
     else
       @renderLater = true
 

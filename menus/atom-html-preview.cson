@@ -1,14 +1,15 @@
 'context-menu':
   'atom-text-editor': [
-    {label: 'Preview WebPPL', command: 'atom-html-preview:toggle'}
+    {label: 'Preview WebPPL', command: 'atom-webppl-preview:toggle'}
   ]
-  '.atom-html-preview webview': [
+  '.atom-webppl-preview webview': [
     {label: 'Cut', command: 'core:cut'}
     {label: 'Copy', command: 'core:copy'}
     {label: 'Paste', command: 'core:paste'}
-    {label: 'Print', command: 'atom-html-preview:print'}
-    {label: 'Open Devtools', command: 'atom-html-preview:open-devtools'}
-    {label: 'Inspect', command: 'atom-html-preview:inspect'}
+    {label: 'Print', command: 'atom-webppl-preview:print'}
+    {label: 'Refresh', command: 'atom-webppl-preview:refresh'}
+    {label: 'Open Devtools', command: 'atom-webppl-preview:open-devtools'}
+    {label: 'Inspect', command: 'atom-webppl-preview:inspect'}
   ]
 
 'menu': [
@@ -17,7 +18,7 @@
     'submenu': [
       'label': 'Preview WebPPL'
       'submenu': [
-        { 'label': 'Enable Preview', 'command': 'atom-html-preview:toggle' }
+        { 'label': 'Enable Preview', 'command': 'atom-webppl-preview:toggle' }
       ]
     ]
   }
