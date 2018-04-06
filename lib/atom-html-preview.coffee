@@ -8,26 +8,15 @@ module.exports =
     triggerOnSave:
       type: 'boolean'
       description: 'Watch will trigger on save.'
-      default: false
-    preserveWhiteSpaces:
+      default: true
+    runWp:
       type: 'boolean'
-      description: 'Preserve white spaces and line endings.'
-      default: false
-    fileEndings:
-      type: 'array'
-      title: 'Preserve file endings'
-      description: 'File endings to preserve'
-      default: ["c", "h"]
-      items:
-        type: 'string'
-    scrollToCursor:
+      description: 'Inject WebPPL run call'
+      default: true
+    enableWpViz:
       type: 'boolean'
-      description: 'Attempts to scroll the webview to the section of your HTML you are editing based on your cursor\'s position.'
-      default: false
-    enableMathJax:
-      type: 'boolean'
-      description: 'Enable MathJax inline rendering \\f$ \\pi \\f$'
-      default: false
+      description: 'Enable WebPPL viz rendering'
+      default: true
 
   htmlPreviewView: null
 
