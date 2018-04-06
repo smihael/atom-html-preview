@@ -1,2 +1,2 @@
-'atom-text-editor[data-grammar~=html]':
+'atom-text-editor':
   'ctrl-shift-h': 'atom-webppl-preview:toggle'

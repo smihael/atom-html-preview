@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/smihael/atom-webppl-preview/issues"
   },
-  "homepage": "https://github.com/smihael/atom-webppl-preview"
+  "homepage": "https://github.com/smihael/atom-webppl-preview",
+  "apmInstallSource": {
+    "type": "git",
+    "source": "https://github.com/smihael/atom-webppl-preview.git",
+    "sha": "f7c4dbdd54be1e9109bb2f9cd6cd9e329a9b29b8"
+  }
 }
