@@ -1,6 +1,6 @@
 'context-menu':
   'atom-text-editor': [
-    {label: 'Preview HTML', command: 'atom-html-preview:toggle'}
+    {label: 'Preview WebPPL', command: 'atom-html-preview:toggle'}
   ]
   '.atom-html-preview webview': [
     {label: 'Cut', command: 'core:cut'}
@@ -15,7 +15,7 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'Preview HTML'
+      'label': 'Preview WebPPL'
       'submenu': [
         { 'label': 'Enable Preview', 'command': 'atom-html-preview:toggle' }
       ]
