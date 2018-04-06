@@ -11,7 +11,7 @@ apm link
 
 Toggle Live Preview:
 
-Press `ctrl-shift-h` in the editor to open the preview pane.
+Press `ctrl-shift-w` in the editor to open the preview pane.
 
 <!--
 ![Atom HTML Preview](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-html-preview.png)
@@ -22,6 +22,13 @@ An example with [Twitter Bootstrap 3 Package][1]
 
 [1]: http://atom.io/packages/atom-bootstrap3
 -->
+
+For syntax highlighting I recommend installing `file-types` package and adding the following vode to `config.cson`:
+```coffeescript
+  "file-types":
+    webppl: "source.js"
+    wppl: "source.js"
+```
 
 
 ## Ackwnowlegments

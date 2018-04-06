@@ -91,7 +91,7 @@
   }
 
   var fileUrl=getQueryParams(window.location.hash)["#file"];
-  console.log(window.location.hash)
+  console.log("Running using  "+window.location.hash)
 
   if (typeof fileUrl !== "undefined" && fileUrl !== null) {
     jQuery.get(fileUrl).then(function(text, status, xhr){
@@ -100,7 +100,6 @@
   }
   //FIXME: Uncaught TypeError: k is not a function
   //webppl.run("display(viz(repeat(100,flip)))")
-
 
   </script>
 

@@ -7,16 +7,13 @@ module.exports =
   config:
     triggerOnSave:
       type: 'boolean'
-      description: 'Watch will trigger on save.'
-      default: true
-    runWp:
-      type: 'boolean'
-      description: 'Inject WebPPL run call'
+      description: 'If unchecked code will be reevaluated as you type (no saving needed)' #FIXME: we should copy contents to tmp directory and read file from there
       default: true
     enableWpViz:
       type: 'boolean'
-      description: 'Enable WebPPL viz rendering'
+      description: 'Enable WebPPL viz rendering (disabling doesn\'t work yet)'
       default: true
+    #TODO: add option to chose other wrapper than index.html
 
   htmlPreviewView: null
 
@@ -38,7 +35,7 @@ module.exports =
       catch error
         return
 
-      return unless protocol is 'html-preview:'
+      return unless protocol is 'wppl-preview:'
 
       try
         pathname = decodeURI(pathname) if pathname
@@ -56,7 +53,7 @@ module.exports =
     editor = atom.workspace.getActiveTextEditor()
     return unless editor?
 
-    uri = "html-preview://editor/#{editor.id}"
+    uri = "wppl-preview://editor/#{editor.id}"
 
     previewPane = atom.workspace.paneForURI(uri)
     if previewPane

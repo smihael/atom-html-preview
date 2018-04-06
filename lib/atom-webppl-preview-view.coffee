@@ -32,7 +32,7 @@ class AtomHtmlPreviewView extends ScrollView
     @div class: 'atom-webppl-preview native-key-bindings', tabindex: -1, =>
       style = 'z-index: 2; padding: 2em;'
       @div class: 'show-error', style: style
-      @tag 'webview', src: path.resolve(__dirname, '../html/index.html#file='+@getPath), outlet: 'htmlview', disablewebsecurity:'on', allowfileaccessfromfiles:'on', allowPointerLock:'on' # preload:loadURL(      'data:text/javascript,var fileUrl="'+@getPath+'"')
+      @tag 'webview', src: path.resolve(__dirname, '../html/loading.html'), outlet: 'htmlview', disablewebsecurity:'on', allowfileaccessfromfiles:'on', allowPointerLock:'on' # preload:loadURL('data:text/javascript,var fileUrl="'+@getPath+'"')
 
   constructor: ({@editorId, filePath}) ->
     super
@@ -152,6 +152,9 @@ class AtomHtmlPreviewView extends ScrollView
     @renderHTMLCode()
 
   save: (callback) ->
+
+    #todo: https://stackoverflow.com/questions/16387192/read-file-to-string-with-coffeescript-and-node-js
+
     # Temp file path
     outPath = path.resolve path.join(os.tmpdir(), @editor.getTitle() + ".html")
     out = ""
@@ -212,7 +215,7 @@ class AtomHtmlPreviewView extends ScrollView
       "WebPPL Preview"
 
   getURI: ->
-    "html-preview://editor/#{@editorId}"
+    "wppl-preview://editor/#{@editorId}"
 
   getPath: ->
     if @editor?
