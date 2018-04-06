@@ -18,7 +18,7 @@
     'submenu': [
       'label': 'Preview WebPPL'
       'submenu': [
-        { 'label': 'Enable Preview', 'command': 'atom-webppl-preview:toggle' }
+        { 'label': 'Toggle Preview', 'command': 'atom-webppl-preview:toggle' }
       ]
     ]
   }

@@ -196,8 +196,6 @@ class AtomHtmlPreviewView extends ScrollView
     if @webviewElementLoaded
       #we deal with https://github.com/electron/electron/blob/master/docs/api/browser-window.md
       #@webview.loadURL("file://" + @tmpPath)
-      @webview.openDevTools()
-
       #@webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html'))
       @webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html')+"#file="+@tmpPath)
       #@webview.loadURL('data:text/html,<textarea>'+@tmpPath+'</textarea>')

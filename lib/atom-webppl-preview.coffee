@@ -9,7 +9,7 @@ module.exports =
       type: 'boolean'
       description: 'If unchecked code will be reevaluated as you type (no saving needed)' #FIXME: we should copy contents to tmp directory and read file from there
       default: true
-    enableWpViz:
+    enableWebpplViz:
       type: 'boolean'
       description: 'Enable WebPPL viz rendering (disabling doesn\'t work yet)'
       default: true

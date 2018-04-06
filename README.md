@@ -1,6 +1,6 @@
 # Atom WebPPL Support
 
-WebPPL support with a live preview tool for Atom Editor.
+WebPPL & WebPPL-viz support with a live preview tool for Atom Editor. 
 
 Install:
 ```bash
@@ -8,20 +8,13 @@ git clone https://github.com/smihael/atom-webppl-preview
 cd atom-webppl-preview
 apm link
 ```
+Alternativelly (if you have atom shell extensions installed), you can just use `apm install https://github.com/smihael/atom-webppl-preview.git`.
 
-Toggle Live Preview:
+To tggle Live Preview, you can either press `ctrl-alt-w` in the editor to open the preview pane or find it in the Plugins menu.
 
-Press `ctrl-shift-w` in the editor to open the preview pane.
+An example with dummy WebPPL code
 
-<!--
-![Atom HTML Preview](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-html-preview.png)
-
-An example with [Twitter Bootstrap 3 Package][1]
-
-![Atom HTML Preview with Bootstrap](https://dl.dropboxusercontent.com/u/20947008/webbox/atom/atom-bootstrap-3.gif)
-
-[1]: http://atom.io/packages/atom-bootstrap3
--->
+![Live Preview](https://raw.githubusercontent.com/smihael/atom-webppl-preview/master/webppl-atom.gif)
 
 For syntax highlighting I recommend installing `file-types` package and adding the following vode to `config.cson`:
 ```coffeescript
