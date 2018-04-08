@@ -5,14 +5,19 @@ HtmlPreviewView       = require './atom-webppl-preview-view'
 
 module.exports =
   config:
-    triggerOnSave:
+    triggerPreviewOnSave:
       type: 'boolean'
       description: 'If unchecked code will be reevaluated as you type (no saving needed)' #FIXME: we should copy contents to tmp directory and read file from there
       default: true
     enableWebpplViz:
       type: 'boolean'
-      description: 'Enable WebPPL viz rendering (disabling doesn\'t work yet)'
+      description: 'Enable WebPPL viz rendering (needs Internet connection)'
       default: true
+    WebpplScriptLocation:
+      type: 'string'
+      description: 'Location of WebPPL script (usefull for offline work)'
+      default: 'http://cdn.webppl.org/webppl-v0.9.11.js'
+
     #TODO: add option to chose other wrapper than index.html
 
   htmlPreviewView: null

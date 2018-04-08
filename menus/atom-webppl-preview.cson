@@ -8,8 +8,8 @@
     {label: 'Paste', command: 'core:paste'}
     {label: 'Print', command: 'atom-webppl-preview:print'}
     {label: 'Refresh', command: 'atom-webppl-preview:refresh'}
-    {label: 'Open Devtools', command: 'atom-webppl-preview:open-devtools'}
-    {label: 'Inspect', command: 'atom-webppl-preview:inspect'}
+    {label: 'Open developer tools', command: 'atom-webppl-preview:open-devtools'}
+    {label: 'Inspect element', command: 'atom-webppl-preview:inspect'}
   ]
 
 'menu': [

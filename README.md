@@ -1,6 +1,6 @@
 # Atom WebPPL Support
 
-[WebPPL](http://webppl.org/) & [WebPPL-viz](http://probmods.github.io/webppl-viz/) support with a live preview tool for Atom Editor. 
+[WebPPL](http://webppl.org/) & [WebPPL-viz](http://probmods.github.io/webppl-viz/) support with a live preview tool for Atom Editor.
 
 Install:
 ```bash
@@ -15,12 +15,13 @@ An example with dummy WebPPL code
 
 ![Live Preview](https://raw.githubusercontent.com/smihael/atom-webppl-preview/master/webppl-atom.gif)
 
-For syntax highlighting I recommend installing `file-types` package and adding the following vode to `config.cson`:
+For syntax highlighting, the instalation of `file-types` package is recomended. By adding the following code to `config.cson`:
 ```coffeescript
   "file-types":
     webppl: "source.js"
     wppl: "source.js"
 ```
+files with `.webppl` or `.wppl` ending will be highlighted according to JavaScript grammar.
 
 
 ## Acknowledgments

@@ -1,107 +1,40 @@
 
 <!DOCTYPE html>
+<!-- This file is deprecated. It is only provided here if you want to use it for file preview within your favurite browser or make another preview template -->
+
 <html lang="en">
 <head>
+
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>WebPPL live output</title>
+  <title>WebPPL file prviewer</title>
 
-  <link rel="stylesheet" href="http://cdn.webppl.org/webppl-viz-0.7.6.css">
-  <style>
-  body {
-    font-family: Helvetica,Arial,sans-serif;
-  }
-  span.logo-main {
-    color: #C81039;
-  }
-  span.logo-bold {
-    font-weight: bold;
-    color: #C81039;
-  }
-
-  result {
-    width: 100%;
-    display: block;
-    padding-top: 15px;
-    padding-left: 10px;
-  }
-  result:nth-of-type(odd) {
-    background-color: lightgrey;
-  }
-  </style>
-
-
+  <!-- JQuerry (not needed if used within atom) -->
   <script crossorigin  src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <!-- WebPPL -->
   <script crossorigin src="http://cdn.webppl.org/webppl-v0.9.11.js"></script>
-
-        <script crossorigin src="http://cdn.webppl.org/webppl-viz-0.7.11.js"></script>
-        <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-
-  <script>
-
-  var addResult = function() {
-    //return  document.getElementById('results');
-    $('#results').append( document.createElement('result') )
-    return _.last($('result'))
-  }
-
-  //HACK: we overwrite webppl-viz dependencies from webppl-editor here
-  //TODO: long term sollution is to implement renderSpec for runningInBrowser == true case in webppl-viz
-  var wpEditor = {};
-  wpEditor.makeResultContainer = addResult;
-
-  //HACK: hijack display to show output
-  (function(){
-    var oldLog = console.log;
-    console.log = function (message) {
-      var res = addResult();
-         res.append(message);
-      oldLog.apply(console, arguments);
-    };
-  })();
-
-  </script>
-
+  <!-- WebPPL viz and its dependencies -->
+  <link rel="stylesheet" href="http://cdn.webppl.org/webppl-viz-0.7.6.css" />
+  <script crossorigin src="http://cdn.webppl.org/webppl-viz-0.7.11.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- Core functions -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="overrides.js"></script>
 </head>
 <body>
 
-  <h1><i><span class="logo-main">Web</span><span class="logo-bold">PPL</span> live output</i></h1>
-  <div id="results"></div>
+  <h1>
+    <i><span class="logo-main">Web</span><span class="logo-bold">PPL</span> file preview</i>
+  </h1>
 
-  <script>
+  <div id="results">
+    <!-- Result blocks will be injected here -->
+  </div>
 
-
-  //TODO: match other filenames as well
-  //var fileUrl = "test.webppl";
-
-  //HACK: inject file name
-  function getQueryParams(qs) {
-    qs = qs.split("+").join(" ");
-    var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
-
-    while (tokens = re.exec(qs)) {
-        params[decodeURIComponent(tokens[1])]
-            = decodeURIComponent(tokens[2]);
-    }
-    return params;
-  }
-
-  var fileUrl=getQueryParams(window.location.hash)["#file"];
-  console.log("Running using  "+window.location.hash)
-
-  if (typeof fileUrl !== "undefined" && fileUrl !== null) {
-    jQuery.get(fileUrl).then(function(text, status, xhr){
-      webppl.run(text)
-    });
-  }
-  //FIXME: Uncaught TypeError: k is not a function
-  //webppl.run("display(viz(repeat(100,flip)))")
-
-  </script>
+  <!-- Inject WebPPL code and run it -->
+  <script src="injectfile.js"></script>
 
 </body>
 </html>

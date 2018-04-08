@@ -151,6 +151,13 @@ class AtomHtmlPreviewView extends ScrollView
     #     @renderHTMLCode()
     @renderHTMLCode()
 
+
+  webpplPreview: ->
+    html = """
+
+    """
+    #TODO: insert index.html here  
+
   save: (callback) ->
 
     #todo: https://stackoverflow.com/questions/16387192/read-file-to-string-with-coffeescript-and-node-js
@@ -190,7 +197,7 @@ class AtomHtmlPreviewView extends ScrollView
     #@webview.webContents.onLoad()
 
   renderHTMLCode: () ->
-    #@find('.show-error').hide()
+    @find('.show-error').hide()
     @htmlview.show()
 
     if @webviewElementLoaded
