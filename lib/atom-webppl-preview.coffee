@@ -7,8 +7,8 @@ module.exports =
   config:
     triggerPreviewOnSave:
       type: 'boolean'
-      description: 'If unchecked code will be reevaluated as you type (no saving needed)' #FIXME: we should copy contents to tmp directory and read file from there
-      default: true
+      description: 'If checked code will be reevaluated only when you save file' 
+      default: false
     enableWebpplViz:
       type: 'boolean'
       description: 'Enable WebPPL viz rendering (needs Internet connection)'

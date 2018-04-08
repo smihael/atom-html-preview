@@ -13,3 +13,7 @@
 #TODOs:
 * Activate plugin only when WebPPL file is opened (to be able to do so, WebPPL specific language grammar should be provided first)
 * Add npm dependencies to WebPPL to support completely offline workflow
+* Investigate on how to make most of the HTML static (look at the showError implementation for this) and only reload portion with the script and not the entire page
+** or maybe use string replacement on index.html template
+* Only rerender html preview when the actual script is changed (currently this is bound to the editor generally, so no mather which file you change, the preview gets updated)
+** Alternatively: close the preview when leaving the script (might be unuseful when we import scripts in the main script)

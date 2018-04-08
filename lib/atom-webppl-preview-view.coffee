@@ -140,15 +140,11 @@ class AtomHtmlPreviewView extends ScrollView
       @editorSub.add @editor.onDidChangePath => @trigger 'title-changed'
 
   renderHTML: ->
-    # if @editor?
-    #   if not atom.config.get("atom-webppl-preview.triggerOnSave") && @editor.getPath()?
-    #     @tempSave(@renderHTMLCode)
-    #   else
-    #     @renderHTMLCode()
-    #@renderHTMLCode()
     @tempSave(@renderHTMLCode)
+    #@webview.openDevTools()
 
   webpplPreview: ->
+
     # get parameters
     webpplLibraryPath = atom.config.get("atom-webppl-preview.webpplLibraryLocation")
     webpplScriptText = @getWebpplScriptText().toString().replace /\n|\r/g, " \\n " #check OS compatibility
@@ -161,7 +157,9 @@ class AtomHtmlPreviewView extends ScrollView
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>WebPPL live previewer</title>
 
-      <script crossorigin  src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+      <!-- jQuery -->
+      <script src="#{pluginDir}/../node_modules/jquery/dist/jquery.min.js"></script>
+
       <!-- WebPPL -->
       <script crossorigin src="#{webpplLibraryPath}"></script>
     """
@@ -182,7 +180,7 @@ class AtomHtmlPreviewView extends ScrollView
     </head>
     <body>
       <h1>
-        <i><span class="logo-main">Web</span><span class="logo-bold">PPL</span> file preview</i>
+        <i><span class="logo-main">Web</span><span class="logo-bold">PPL</span> live preview</i>
       </h1>
 
       <div id="results">
@@ -213,8 +211,7 @@ class AtomHtmlPreviewView extends ScrollView
   tempSave: (callback) ->
     # Temp file path
     @tmpPath = path.resolve path.join(os.tmpdir(), (@editor.getTitle().replace ".", "_")+"_preview.html")
-
-    @showDbg @tmpPath
+    @showDbg "Rendering from "+@tmpPath
 
     html = @webpplPreview()
 
@@ -224,24 +221,24 @@ class AtomHtmlPreviewView extends ScrollView
       catch error
         @showError error
 
-  # renderHTMLCodeDbg: () ->
-  #   @htmlview.show()
-  #   @webview.openDevTools()
 
   renderHTMLCode: () ->
-    #@find('.show-error').hide()
+    @find('.show-error').hide()
     @htmlview.show()
-    #htmlExport=@webpplPreview()
 
     if @webviewElementLoaded
       @webview.loadURL("file://" + @tmpPath)
+
+      # Legacy mode:
       #@webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html')+"#file="+@webpplScriptPath)
+
+      # Experimental:
+      #htmlExport=@webpplPreview()
       #@webview.loadURL("data:text/html,#{htmlExport}")
 
       atom.commands.dispatch 'atom-webppl-preview', 'html-changed'
     else
       @renderLater = true
-
 
   getTitle: ->
     if @editor?
