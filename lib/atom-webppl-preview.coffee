@@ -13,7 +13,7 @@ module.exports =
       type: 'boolean'
       description: 'Enable WebPPL viz rendering (needs Internet connection)'
       default: true
-    WebpplScriptLocation:
+    webpplLibraryLocation:
       type: 'string'
       description: 'Location of WebPPL script (usefull for offline work)'
       default: 'http://cdn.webppl.org/webppl-v0.9.11.js'

@@ -4,12 +4,6 @@ fs                    = require 'fs'
 path                  = require 'path'
 os                    = require 'os'
 
-# runWpScript = """
-# <script>
-#
-# </script>
-# """
-
 pluginDir = __dirname
 
 
@@ -39,7 +33,8 @@ class AtomHtmlPreviewView extends ScrollView
 
     if @editorId?
       @resolveEditor(@editorId)
-      @tmpPath = @getPath() # after resolveEditor
+      @webpplScriptPath = @getPath() # after resolveEditor
+
     else
       if atom.workspace?
         @subscribeToFilePath(filePath)
@@ -59,7 +54,8 @@ class AtomHtmlPreviewView extends ScrollView
       @webviewElementLoaded = true
       if @renderLater
         @renderLater = false
-        @renderHTMLCode()
+        #@renderHTMLCode()
+        @renderHTML()
 
 
   onStartedResize: ->
@@ -149,66 +145,103 @@ class AtomHtmlPreviewView extends ScrollView
     #     @save(@renderHTMLCode)
     #   else
     #     @renderHTMLCode()
-    @renderHTMLCode()
-
+    #@renderHTMLCode()
+    #@showDbg @editor.getTitle().replace ".", "_"
+    @save(@renderHTMLCode)
 
   webpplPreview: ->
+    # get parameters
+    webpplLibraryPath = atom.config.get("atom-webppl-preview.webpplLibraryLocation")
+
+    #@showDbg(webpplLibraryPath)
+    @webview.openDevTools()
+    #check OS compatibility
+    webpplScriptText = @getWebpplScriptText().toString().replace /\n/g, " \\n "
+
     # basically the same as index.html
     html = """
+    <html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>WebPPL live previewer</title>
 
+      <script crossorigin  src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+      <!-- WebPPL -->
+      <script crossorigin src="#{webpplLibraryPath}"></script>
     """
 
+    if atom.config.get("atom-webppl-preview.enableWebpplViz")
+      html += """
+      <!-- WebPPL viz and its dependencies -->
+      <link rel="stylesheet" href="http://cdn.webppl.org/webppl-viz-0.7.6.css" />
+      <script crossorigin src="http://cdn.webppl.org/webppl-viz-0.7.11.js"></script>
+      <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+      <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+      """
+    html += """
+      <!-- Core functions -->
+      <base href="#{pluginDir}/../html/index.html" />
+      <link rel="stylesheet" href="style.css" />
+      <script src="overrides.js"></script>
+    </head>
+    <body>
+      <h1>
+        <i><span class="logo-main">Web</span><span class="logo-bold">PPL</span> file preview</i>
+      </h1>
+
+      <div id="results">
+        <!-- Result blocks will be injected here -->
+      </div>
+
+      <!-- Inject WebPPL code and run it -->
+      <script>
+        var text = '#{webpplScriptText}';
+        webppl.run(text, function(s,x) {result = x});
+      </script>
+
+    </body>
+    </html>
+    """
+    @htmlExport = html
+
+
+  getWebpplScriptText: ->
+    if @editor?
+       if not atom.config.get("atom-webppl-preview.triggerPreviewOnSave") && @editor.getPath()?
+         # get text from editor
+         @editor.getText()
+       else
+         # get text from file
+         fs.readFileSync @webpplScriptPath, 'utf-8'
+   #TODO: output file location
 
   save: (callback) ->
-
-    #todo: https://stackoverflow.com/questions/16387192/read-file-to-string-with-coffeescript-and-node-js
-
     # Temp file path
-    outPath = path.resolve path.join(os.tmpdir(), @editor.getTitle() + ".html")
-    out = ""
-    fileEnding = @editor.getTitle().split(".").pop()
+    @tmpPath = path.resolve path.join(os.tmpdir(), (@editor.getTitle().replace ".", "_")+"_preview.html")
 
-    if atom.config.get("atom-webppl-preview.enableWpViz")
-      out += """
-        <script src="http://cdn.webppl.org/webppl-viz-0.7.11.js"></script>
-        <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-      """
+    @showDbg @tmpPath
 
+    html = @webpplPreview()
 
-    # out += "<base href=\"" + @getPath() + "\">"
-
-    # Scroll into view
-    editorText = @editor.getText()
-    #{runWpScript}
-
-    out += editorText
-
-    @outExport = out
-
-    @tmpPath = outPath
-    fs.writeFile outPath, out, =>
+    fs.writeFile @tmpPath, html, =>
       try
         @renderHTMLCode()
       catch error
         @showError error
 
-  renderHTMLCodeDbg: () ->
-    @htmlview.show()
-    @webview.openDevTools()
-    #@webview.webContents.onLoad()
+  # renderHTMLCodeDbg: () ->
+  #   @htmlview.show()
+  #   @webview.openDevTools()
 
   renderHTMLCode: () ->
-    @find('.show-error').hide()
+    #@find('.show-error').hide()
     @htmlview.show()
 
     if @webviewElementLoaded
-      #we deal with
-      #@webview.loadURL("file://" + @tmpPath)
-      #@webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html'))
-      @webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html')+"#file="+@tmpPath)
-      #@webview.loadURL('data:text/html,<textarea>'+@tmpPath+'</textarea>')
-      #@webview.loadURL("data:text/html,"+@outExport)
+      @webview.loadURL("file://" + @tmpPath)
+      #@webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html')+"#file="+@webpplScriptPath)
+      #@webview.loadURL('data:text/html,<textarea>'+@webpplScriptPath+'</textarea>')
 
       atom.commands.dispatch 'atom-webppl-preview', 'html-changed'
     else
@@ -227,6 +260,13 @@ class AtomHtmlPreviewView extends ScrollView
   getPath: ->
     if @editor?
       @editor.getPath()
+
+  showDbg: (message) ->
+    @find('.show-error')
+    .html $$$ ->
+      @h2 'Debug info:'
+      @p message if message?
+    .show()
 
   showError: (result) ->
     failureMessage = result?.message
