@@ -4,11 +4,11 @@ fs                    = require 'fs'
 path                  = require 'path'
 os                    = require 'os'
 
-runWpScript = """
-<script>
-
-</script>
-"""
+# runWpScript = """
+# <script>
+#
+# </script>
+# """
 
 pluginDir = __dirname
 
@@ -32,7 +32,7 @@ class AtomHtmlPreviewView extends ScrollView
     @div class: 'atom-webppl-preview native-key-bindings', tabindex: -1, =>
       style = 'z-index: 2; padding: 2em;'
       @div class: 'show-error', style: style
-      @tag 'webview', src: path.resolve(__dirname, '../html/loading.html'), outlet: 'htmlview', disablewebsecurity:'on', allowfileaccessfromfiles:'on', allowPointerLock:'on' # preload:loadURL('data:text/javascript,var fileUrl="'+@getPath+'"')
+      @tag 'webview', src: path.resolve(__dirname, '../html/loading.html'), outlet: 'htmlview', disablewebsecurity:'on', allowfileaccessfromfiles:'on', allowPointerLock:'on'
 
   constructor: ({@editorId, filePath}) ->
     super
@@ -52,7 +52,7 @@ class AtomHtmlPreviewView extends ScrollView
     handles = $("atom-pane-resize-handle")
     handles.on 'mousedown', => @onStartedResize()
 
-    #@find('.show-error').hide()
+    @find('.show-error').hide()
     @webview = @htmlview[0]
 
     @webview.addEventListener 'dom-ready', =>
@@ -153,10 +153,11 @@ class AtomHtmlPreviewView extends ScrollView
 
 
   webpplPreview: ->
+    # basically the same as index.html
     html = """
 
     """
-    #TODO: insert index.html here  
+
 
   save: (callback) ->
 
@@ -174,7 +175,8 @@ class AtomHtmlPreviewView extends ScrollView
         <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
       """
 
-    out += "<base href=\"" + @getPath() + "\">"
+
+    # out += "<base href=\"" + @getPath() + "\">"
 
     # Scroll into view
     editorText = @editor.getText()
@@ -201,7 +203,7 @@ class AtomHtmlPreviewView extends ScrollView
     @htmlview.show()
 
     if @webviewElementLoaded
-      #we deal with https://github.com/electron/electron/blob/master/docs/api/browser-window.md
+      #we deal with
       #@webview.loadURL("file://" + @tmpPath)
       #@webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html'))
       @webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html')+"#file="+@tmpPath)
