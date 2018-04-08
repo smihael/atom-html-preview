@@ -142,21 +142,16 @@ class AtomHtmlPreviewView extends ScrollView
   renderHTML: ->
     # if @editor?
     #   if not atom.config.get("atom-webppl-preview.triggerOnSave") && @editor.getPath()?
-    #     @save(@renderHTMLCode)
+    #     @tempSave(@renderHTMLCode)
     #   else
     #     @renderHTMLCode()
     #@renderHTMLCode()
-    #@showDbg @editor.getTitle().replace ".", "_"
-    @save(@renderHTMLCode)
+    @tempSave(@renderHTMLCode)
 
   webpplPreview: ->
     # get parameters
     webpplLibraryPath = atom.config.get("atom-webppl-preview.webpplLibraryLocation")
-
-    #@showDbg(webpplLibraryPath)
-    @webview.openDevTools()
-    #check OS compatibility
-    webpplScriptText = @getWebpplScriptText().toString().replace /\n/g, " \\n "
+    webpplScriptText = @getWebpplScriptText().toString().replace /\n|\r/g, " \\n " #check OS compatibility
 
     # basically the same as index.html
     html = """
@@ -180,10 +175,10 @@ class AtomHtmlPreviewView extends ScrollView
       <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
       """
     html += """
-      <!-- Core functions -->
-      <base href="#{pluginDir}/../html/index.html" />
-      <link rel="stylesheet" href="style.css" />
-      <script src="overrides.js"></script>
+      <!-- Core functions -- >
+      <base href="#{pluginDir}/../html/index.html" /> -->
+      <link rel="stylesheet" href="#{pluginDir}/../html/style.css" />
+      <script src="#{pluginDir}/../html/overrides.js"></script>
     </head>
     <body>
       <h1>
@@ -205,7 +200,6 @@ class AtomHtmlPreviewView extends ScrollView
     """
     @htmlExport = html
 
-
   getWebpplScriptText: ->
     if @editor?
        if not atom.config.get("atom-webppl-preview.triggerPreviewOnSave") && @editor.getPath()?
@@ -216,7 +210,7 @@ class AtomHtmlPreviewView extends ScrollView
          fs.readFileSync @webpplScriptPath, 'utf-8'
    #TODO: output file location
 
-  save: (callback) ->
+  tempSave: (callback) ->
     # Temp file path
     @tmpPath = path.resolve path.join(os.tmpdir(), (@editor.getTitle().replace ".", "_")+"_preview.html")
 
@@ -237,11 +231,12 @@ class AtomHtmlPreviewView extends ScrollView
   renderHTMLCode: () ->
     #@find('.show-error').hide()
     @htmlview.show()
+    #htmlExport=@webpplPreview()
 
     if @webviewElementLoaded
       @webview.loadURL("file://" + @tmpPath)
       #@webview.loadURL("file://" + path.resolve(__dirname, '../html/index.html')+"#file="+@webpplScriptPath)
-      #@webview.loadURL('data:text/html,<textarea>'+@webpplScriptPath+'</textarea>')
+      #@webview.loadURL("data:text/html,#{htmlExport}")
 
       atom.commands.dispatch 'atom-webppl-preview', 'html-changed'
     else
