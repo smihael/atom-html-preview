@@ -12,7 +12,13 @@ function getQueryParams(qs) {
 }
 
 var fileUrl=getQueryParams(window.location.hash)["#file"];
-console.log("Running using  "+window.location.hash)
+
+if(_.isEmpty(fileUrl)) {
+  fileUrl=prompt("Enter (relative) file location")
+  window.location.hash = "file="+fileUrl
+} else {
+  console.log("Running from  "+fileUrl)
+}
 
 if (typeof fileUrl !== "undefined" && fileUrl !== null) {
   jQuery.get(fileUrl).then(function(text, status, xhr){
@@ -20,3 +26,4 @@ if (typeof fileUrl !== "undefined" && fileUrl !== null) {
     webppl.run(text, function(s,x) {result = x})
   });
 }
+

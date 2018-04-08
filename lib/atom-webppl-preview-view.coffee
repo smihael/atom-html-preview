@@ -211,7 +211,7 @@ class AtomHtmlPreviewView extends ScrollView
   tempSave: (callback) ->
     # Temp file path
     @tmpPath = path.resolve path.join(os.tmpdir(), (@editor.getTitle().replace ".", "_")+"_preview.html")
-    @showDbg "Rendering from "+@tmpPath
+    #@showDbg "Rendering from "+@tmpPath
 
     html = @webpplPreview()
 

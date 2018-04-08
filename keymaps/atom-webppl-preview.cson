@@ -1,2 +1,2 @@
 'atom-text-editor[]':
-  'ctrl-alt-w': 'atom-webppl-preview:toggle'
+  'ctrl-alt-h': 'atom-webppl-preview:toggle'
