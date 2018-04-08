@@ -17,6 +17,6 @@ console.log("Running using  "+window.location.hash)
 if (typeof fileUrl !== "undefined" && fileUrl !== null) {
   jQuery.get(fileUrl).then(function(text, status, xhr){
     //FIXME: Uncaught TypeError: k is not a function
-    webppl.run(text)
+    webppl.run(text, function(s,x) {result = x})
   });
 }
