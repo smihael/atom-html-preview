@@ -133,7 +133,7 @@ class AtomHtmlPreviewView extends ScrollView
     @editorSub = new CompositeDisposable
 
     if @editor?
-      if atom.config.get("atom-webppl-preview.triggerOnSave")
+      if atom.config.get("atom-webppl-preview.triggerPreviewOnSave")
         @editorSub.add @editor.onDidSave changeHandler
       else
         @editorSub.add @editor.onDidStopChanging changeHandler
